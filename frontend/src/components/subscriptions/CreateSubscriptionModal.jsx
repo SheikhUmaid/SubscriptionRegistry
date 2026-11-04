@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import Modal from "../common/Modal";
 import deploymentService from "../../services/deploymentService";
 import subscriptionService from "../../services/subscriptionService";
+import PlanEntitlements from "./PlanEntitlements";
+import { formatCurrency } from "../../utils/formatters";
 import { Loader2, AlertCircle } from "lucide-react";
 
 export function CreateSubscriptionModal({ isOpen, onClose, onSuccess }) {
   const [deployments, setDeployments] = useState([]);
   const [loadingDeps, setLoadingDeps] = useState(false);
+  const [plans, setPlans] = useState([]);
 
   // Default start date = today, expiry date = 30 days from now
   const todayStr = new Date().toISOString().split("T")[0];
@@ -16,7 +19,7 @@ export function CreateSubscriptionModal({ isOpen, onClose, onSuccess }) {
 
   const [formData, setFormData] = useState({
     deploymentId: "",
-    planCode: "monthly",
+    planCode: "basic",
     startsAt: todayStr,
     expiresAt: defaultExpiryStr,
     price: "",
@@ -30,6 +33,7 @@ export function CreateSubscriptionModal({ isOpen, onClose, onSuccess }) {
   useEffect(() => {
     if (isOpen) {
       loadDeployments();
+      loadPlans();
     }
   }, [isOpen]);
 
@@ -45,13 +49,36 @@ export function CreateSubscriptionModal({ isOpen, onClose, onSuccess }) {
     }
   };
 
+  const loadPlans = async () => {
+    try {
+      const data = await subscriptionService.getPlans();
+      setPlans(data);
+      const current = data.find((p) => p.code === formData.planCode) || data[0];
+      if (current) applyPlan(current);
+    } catch {
+      setError("Failed to load plans.");
+    }
+  };
+
+  const applyPlan = (plan) => {
+    setFormData((prev) => ({
+      ...prev,
+      planCode: plan.code,
+      price: String(plan.price),
+      currency: plan.currency,
+    }));
+    setFieldErrors((prev) => ({ ...prev, planCode: "", price: "" }));
+  };
+
+  const selectedPlan = plans.find((p) => p.code === formData.planCode);
+
   const validate = () => {
     const errors = {};
     if (!formData.deploymentId) {
       errors.deploymentId = "Please select a target deployment.";
     }
-    if (!formData.planCode.trim()) {
-      errors.planCode = "Plan code is required.";
+    if (!selectedPlan) {
+      errors.planCode = "Please select a plan.";
     }
     if (!formData.startsAt) {
       errors.startsAt = "Start date is required.";
@@ -79,7 +106,7 @@ export function CreateSubscriptionModal({ isOpen, onClose, onSuccess }) {
     try {
       await subscriptionService.createSubscription({
         deploymentId: formData.deploymentId,
-        planCode: formData.planCode.trim(),
+        planCode: formData.planCode,
         startsAt: new Date(formData.startsAt),
         expiresAt: new Date(formData.expiresAt),
         price: Number(formData.price),
@@ -144,40 +171,63 @@ export function CreateSubscriptionModal({ isOpen, onClose, onSuccess }) {
           )}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Plan Code <span className="text-rose-500">*</span>
-            </label>
-            <select
-              value={formData.planCode}
-              onChange={(e) => setFormData({ ...formData, planCode: e.target.value })}
-              className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
-            >
-              <option value="monthly">Monthly Standard</option>
-              <option value="quarterly">Quarterly</option>
-              <option value="half-yearly">Half Yearly</option>
-              <option value="annual">Annual Enterprise</option>
-              <option value="custom">Custom Trial / Enterprise</option>
-            </select>
+        <div>
+          <label className="block text-xs font-semibold text-slate-700 mb-1">
+            Plan <span className="text-rose-500">*</span>
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            {plans.map((plan) => {
+              const active = plan.code === formData.planCode;
+              return (
+                <button
+                  key={plan.code}
+                  type="button"
+                  onClick={() => applyPlan(plan)}
+                  className={`text-left p-2.5 rounded-lg border transition-colors ${
+                    active
+                      ? "border-zinth-500 bg-orange-50 ring-2 ring-zinth-500/20"
+                      : "border-slate-300 bg-white hover:bg-slate-50"
+                  }`}
+                >
+                  <span className="block text-sm font-semibold text-slate-900">
+                    {plan.name}
+                  </span>
+                  <span className="block text-xs font-medium text-slate-700">
+                    {formatCurrency(plan.price, plan.currency)}/{plan.interval}
+                  </span>
+                  <span className="block text-[11px] text-slate-500 mt-0.5">
+                    {plan.label}
+                  </span>
+                </button>
+              );
+            })}
           </div>
+          {fieldErrors.planCode && (
+            <p className="mt-1 text-xs text-rose-600">{fieldErrors.planCode}</p>
+          )}
+          {selectedPlan && (
+            <div className="mt-3 p-3 rounded-lg border border-slate-200">
+              <p className="text-xs text-slate-500 mb-2">{selectedPlan.tagline}</p>
+              <PlanEntitlements plan={selectedPlan} />
+            </div>
+          )}
+        </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Currency <span className="text-rose-500">*</span>
-            </label>
-            <select
-              value={formData.currency}
-              onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
-              className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
-            >
-              <option value="INR">INR (₹)</option>
-              <option value="USD">USD ($)</option>
-              <option value="EUR">EUR (€)</option>
-              <option value="GBP">GBP (£)</option>
-              <option value="AED">AED (د.إ)</option>
-            </select>
-          </div>
+        <div>
+          <label className="block text-xs font-semibold text-slate-700 mb-1">
+            Currency <span className="text-rose-500">*</span>
+          </label>
+          <select
+            value={formData.currency}
+            onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
+            className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+          >
+            <option value="INR">INR (₹)</option>
+            <option value="USD">USD ($)</option>
+            <option value="EUR">EUR (€)</option>
+            <option value="GBP">GBP (£)</option>
+            <option value="AED">AED (د.إ)</option>
+          </select>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

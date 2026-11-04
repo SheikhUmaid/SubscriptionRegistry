@@ -14,7 +14,7 @@ const subscriptionSchema = new mongoose.Schema(
         planCode: {
             type: String,
             required: true,
-            default: "monthly",
+            default: "basic",
             trim: true,
         },
 

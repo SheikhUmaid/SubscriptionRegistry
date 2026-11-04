@@ -404,6 +404,10 @@ export function Subscriptions() {
         subscription={selectedSub}
         customerName={selectedSub ? getCustomerName(selectedSub) : ""}
         onDelete={(sub) => setSubToDelete(sub)}
+        onPlanChanged={(updated) => {
+          setSelectedSub(updated);
+          fetchData();
+        }}
       />
 
       <ConfirmModal

@@ -1,6 +1,7 @@
 
 import Subscription from "../models/Subscription.js";
 import Customer from "../models/Customer.js";
+import { getPlanEntitlements } from "../config/plans.js";
 
 export async function getRegistryStatus(req, res) {
     try {
@@ -25,6 +26,7 @@ export async function getRegistryStatus(req, res) {
                 success: true,
                 status: "expired",
                 bookingEnabled: false,
+                plan: null,
                 message: "No active subscription found."
             });
         }
@@ -50,6 +52,7 @@ export async function getRegistryStatus(req, res) {
             status,
             bookingEnabled: status === "active",
             expiresAt: subscription.expiresAt,
+            plan: getPlanEntitlements(subscription.planCode),
             message: status === "active"
                 ? "Subscription is active."
                 : "Booking service is unavailable."

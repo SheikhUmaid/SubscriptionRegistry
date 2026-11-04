@@ -1,6 +1,26 @@
 import api from "./api";
 
+let plansCache = null;
+
 export const subscriptionService = {
+  async getPlans() {
+    if (!plansCache) {
+      plansCache = api
+        .get("/subscriptions/plans")
+        .then((response) => response.data?.data || [])
+        .catch((err) => {
+          plansCache = null;
+          throw err;
+        });
+    }
+    return plansCache;
+  },
+
+  async changePlan(id, data) {
+    const response = await api.patch(`/subscriptions/${id}/plan`, data);
+    return response.data;
+  },
+
   async getSubscriptions() {
     const response = await api.get("/subscriptions");
     return response.data?.data || [];

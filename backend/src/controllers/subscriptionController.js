@@ -2,19 +2,42 @@
 import Subscription from "../models/Subscription.js";
 import Deployment from "../models/Deployment.js";
 import RenewalRecord from "../models/RenewalRecord.js";
+import {
+    PLANS,
+    PLAN_CODES,
+    DEFAULT_PLAN_CODE,
+    isValidPlanCode
+} from "../config/plans.js";
+
+export async function getPlans(req, res) {
+    return res.status(200).json({
+        success: true,
+        count: PLAN_CODES.length,
+        data: PLAN_CODES.map((code) => PLANS[code])
+    });
+}
 
 export async function createSubscription(req, res) {
     try {
         const {
             deploymentId,
-            planCode = "monthly",
+            planCode = DEFAULT_PLAN_CODE,
             startsAt = new Date(),
             expiresAt,
-            price,
             currency = "INR"
         } = req.body;
 
-        if (!deploymentId || !expiresAt || price === undefined) {
+        if (!isValidPlanCode(planCode)) {
+            return res.status(400).json({
+                success: false,
+                message: `Invalid plan. Choose one of: ${PLAN_CODES.join(", ")}.`
+            });
+        }
+
+        // Fall back to the catalogue price when none is given.
+        const price = req.body.price ?? PLANS[planCode].price;
+
+        if (!deploymentId || !expiresAt) {
             return res.status(400).json({
                 success: false,
                 message: "Required subscription details are missing."
@@ -195,6 +218,60 @@ export async function extendSubscription(req, res) {
         }
 
         console.error("Extend subscription error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error."
+        });
+    }
+}
+
+
+export async function changeSubscriptionPlan(req, res) {
+    try {
+        const { id } = req.params;
+        const { planCode, price } = req.body;
+
+        if (!isValidPlanCode(planCode)) {
+            return res.status(400).json({
+                success: false,
+                message: `Invalid plan. Choose one of: ${PLAN_CODES.join(", ")}.`
+            });
+        }
+
+        if (price !== undefined && (isNaN(price) || Number(price) < 0)) {
+            return res.status(400).json({
+                success: false,
+                message: "Price must be a non-negative number."
+            });
+        }
+
+        const subscription = await Subscription.findByIdAndUpdate(
+            id,
+            {
+                planCode,
+                price: price !== undefined
+                    ? Number(price)
+                    : PLANS[planCode].price
+            },
+            { new: true, runValidators: true }
+        ).populate("deploymentId");
+
+        if (!subscription) {
+            return res.status(404).json({
+                success: false,
+                message: "Subscription not found."
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: `Plan changed to ${PLANS[planCode].name}.`,
+            data: subscription
+        });
+
+    } catch (error) {
+        console.error("Change plan error:", error);
 
         return res.status(500).json({
             success: false,
