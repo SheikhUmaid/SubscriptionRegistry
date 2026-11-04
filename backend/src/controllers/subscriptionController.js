@@ -121,6 +121,48 @@ export async function getSubscriptions(req, res) {
 }
 
 
+/**
+ * Add 30 days to a subscription and record the confirmed payment.
+ * Early renewals keep their remaining time. Used by the Extend action and
+ * by approving a venue's plan request.
+ */
+export async function applyRenewal(subscription, deployment, {
+    amount,
+    paymentMethod = "upi",
+    paymentReference,
+    notes = "",
+    recordedBy = "admin"
+}) {
+    const now = new Date();
+    const periodStartsAt =
+        subscription.expiresAt > now ? subscription.expiresAt : now;
+
+    const periodEndsAt = new Date(periodStartsAt);
+    periodEndsAt.setDate(periodEndsAt.getDate() + 30);
+
+    const renewalRecord = await RenewalRecord.create({
+        customerId: deployment.customerId,
+        deploymentId: deployment._id,
+        subscriptionId: subscription._id,
+        type: "renewal",
+        amount: Number(amount),
+        currency: subscription.currency,
+        paymentStatus: "confirmed",
+        paymentMethod,
+        paymentReference: paymentReference || undefined,
+        periodStartsAt,
+        periodEndsAt,
+        recordedBy,
+        notes
+    });
+
+    subscription.expiresAt = periodEndsAt;
+    subscription.status = "active";
+    await subscription.save();
+
+    return renewalRecord;
+}
+
 export async function extendSubscription(req, res) {
     try {
         const { id } = req.params;
@@ -154,17 +196,6 @@ export async function extendSubscription(req, res) {
             });
         }
 
-        const now = new Date();
-
-        // Preserve remaining subscription time when renewing early.
-        const periodStartsAt =
-            subscription.expiresAt > now
-                ? subscription.expiresAt
-                : now;
-
-        const periodEndsAt = new Date(periodStartsAt);
-        periodEndsAt.setDate(periodEndsAt.getDate() + 30);
-
         const deployment = await Deployment.findById(
             subscription.deploymentId
         );
@@ -176,29 +207,13 @@ export async function extendSubscription(req, res) {
             });
         }
 
-        // Record the renewal after payment has been verified by admin.
-        const renewalRecord = await RenewalRecord.create({
-            customerId: deployment.customerId,
-            deploymentId: deployment._id,
-            subscriptionId: subscription._id,
-            type: "renewal",
-            amount: Number(amount),
-            currency: subscription.currency,
-            paymentStatus: "confirmed",
+        const renewalRecord = await applyRenewal(subscription, deployment, {
+            amount,
             paymentMethod,
             paymentReference,
-            periodStartsAt,
-            periodEndsAt,
-            recordedBy: String(
-                req.user?._id || req.user?.id || "admin"
-            ),
-            notes
+            notes,
+            recordedBy: String(req.user?._id || req.user?.id || "admin")
         });
-
-        subscription.expiresAt = periodEndsAt;
-        subscription.status = "active";
-
-        await subscription.save();
 
         return res.status(200).json({
             success: true,

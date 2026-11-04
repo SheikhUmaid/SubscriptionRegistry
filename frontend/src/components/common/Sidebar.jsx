@@ -9,6 +9,7 @@ import {
   Settings,
   X,
   ShieldCheck,
+  Inbox,
 } from "lucide-react";
 
 const navigationItems = [
@@ -16,6 +17,7 @@ const navigationItems = [
   { name: "Customers", href: "/customers", icon: Users },
   { name: "Deployments", href: "/deployments", icon: Server },
   { name: "Subscriptions", href: "/subscriptions", icon: CreditCard },
+  { name: "Plan Requests", href: "/plan-requests", icon: Inbox },
   { name: "Renewal History", href: "/renewals", icon: History },
   { name: "Settings", href: "/settings", icon: Settings },
 ];
