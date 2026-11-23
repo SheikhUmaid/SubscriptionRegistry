@@ -94,7 +94,7 @@ export function SubscriptionDetailModal({ isOpen, onClose, subscription, custome
                 {currentPlan?.name || subscription.planCode}
               </span>
               {isLegacyPlan && (
-                <span className="block text-[11px] text-orange-600">
+                <span className="block text-xs text-orange-600">
                   Legacy code "{subscription.planCode}" — licensed as {currentPlan?.name}
                 </span>
               )}
@@ -207,7 +207,7 @@ export function SubscriptionDetailModal({ isOpen, onClose, subscription, custome
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
+            className="px-4 py-2.5 text-sm font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
           >
             Close
           </button>

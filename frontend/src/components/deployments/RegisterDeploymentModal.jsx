@@ -174,7 +174,7 @@ export function RegisterDeploymentModal({ isOpen, onClose, onSuccess }) {
               placeholder="e.g. turf-booking"
               value={formData.product}
               onChange={(e) => setFormData({ ...formData, product: e.target.value })}
-              className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+              className="w-full px-3.5 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
             />
           </div>
 
@@ -185,7 +185,7 @@ export function RegisterDeploymentModal({ isOpen, onClose, onSuccess }) {
             <select
               value={formData.hostingType}
               onChange={(e) => setFormData({ ...formData, hostingType: e.target.value })}
-              className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+              className="w-full px-3.5 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
             >
               <option value="shared-vps">Shared VPS</option>
               <option value="dedicated-vps">Dedicated VPS</option>
@@ -249,7 +249,7 @@ export function RegisterDeploymentModal({ isOpen, onClose, onSuccess }) {
             placeholder="e.g. vps-node-blr-04 (IP: 142.93.xxx.xxx)"
             value={formData.hostingReference}
             onChange={(e) => setFormData({ ...formData, hostingReference: e.target.value })}
-            className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+            className="w-full px-3.5 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
           />
         </div>
 
@@ -258,14 +258,14 @@ export function RegisterDeploymentModal({ isOpen, onClose, onSuccess }) {
             type="button"
             onClick={onClose}
             disabled={submitting}
-            className="px-4 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
+            className="px-4 py-2.5 text-sm font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={submitting}
-            className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-zinth-500 hover:bg-zinth-600 rounded-lg shadow-sm transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-zinth-500 hover:bg-zinth-600 rounded-xl shadow-glow transition-colors disabled:opacity-50"
           >
             {submitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
             {submitting ? "Registering..." : "Register Deployment"}

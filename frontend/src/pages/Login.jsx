@@ -58,44 +58,80 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0F172A] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Subtle decorative background elements */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-orange-500/10 via-transparent to-transparent pointer-events-none" />
+    <div className="min-h-screen grid lg:grid-cols-[1.1fr_1fr] bg-white">
+      {/* Brand panel (desktop) */}
+      <aside className="relative hidden lg:flex flex-col justify-between overflow-hidden bg-ink-950 p-12 text-white">
+        <div className="pointer-events-none absolute -top-40 -left-40 w-[32rem] h-[32rem] rounded-full bg-zinth-500/25 blur-3xl" />
+        <div className="pointer-events-none absolute bottom-0 right-0 w-96 h-96 rounded-full bg-blue-500/10 blur-3xl" />
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.6) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+            maskImage: "radial-gradient(ellipse at center, black 30%, transparent 75%)",
+            WebkitMaskImage: "radial-gradient(ellipse at center, black 30%, transparent 75%)",
+          }}
+        />
 
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        {/* Brand Header */}
-        <div className="text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-zinth-500 to-orange-600 text-white font-extrabold text-2xl shadow-lg shadow-orange-500/25 mb-3">
+        <div className="relative flex items-center gap-3">
+          <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-zinth-400 to-zinth-600 font-extrabold text-xl shadow-glow">
             Z
           </div>
-          <h2 className="text-2xl font-bold tracking-tight text-white">
-            Zinth Labs Registry
-          </h2>
-          <p className="mt-1 text-sm text-slate-400">
-            Internal Operations & Subscription Control Center
+          <div className="leading-tight">
+            <span className="block text-base font-bold">Zinth Labs</span>
+            <span className="block text-xs text-slate-400">Registry Admin</span>
+          </div>
+        </div>
+
+        <div className="relative max-w-md">
+          <h1 className="text-4xl font-bold tracking-tight leading-[1.15]">
+            Every customer, deployment and subscription,{" "}
+            <span className="text-zinth-400">in one place.</span>
+          </h1>
+          <p className="mt-4 text-base text-slate-400">
+            Track licenses, approve plan requests and keep renewals on schedule from a single control center.
           </p>
         </div>
 
-        {/* Login Card */}
-        <div className="mt-8 bg-white py-8 px-6 shadow-2xl rounded-2xl sm:px-10 border border-slate-100">
-          <div className="mb-6">
-            <h3 className="text-base font-semibold text-slate-900">
-              Admin Authentication
-            </h3>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Enter your authorized staff credentials to continue.
+        <p className="relative text-xs text-slate-500">
+          © {new Date().getFullYear()} Zinth Labs. Internal use only.
+        </p>
+      </aside>
+
+      {/* Form */}
+      <div className="flex flex-col justify-center px-6 py-12 sm:px-12 bg-slate-50 lg:bg-white">
+        <div className="w-full max-w-sm mx-auto">
+          {/* Brand (mobile) */}
+          <div className="lg:hidden flex items-center gap-3 mb-10">
+            <div className="flex items-center justify-center w-11 h-11 rounded-xl bg-gradient-to-br from-zinth-400 to-zinth-600 text-white font-extrabold text-xl shadow-glow">
+              Z
+            </div>
+            <div className="leading-tight">
+              <span className="block text-base font-bold text-slate-900">Zinth Labs</span>
+              <span className="block text-xs text-slate-500">Registry Admin</span>
+            </div>
+          </div>
+
+        <div>
+          <div className="mb-8">
+            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+              Welcome back
+            </h2>
+            <p className="text-sm text-slate-500 mt-1.5">
+              Sign in with your admin account to continue.
             </p>
           </div>
 
           {isSessionExpired && !error && (
-            <div className="mb-5 p-3 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-xs flex items-center gap-2">
+            <div className="mb-6 p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>Your previous session has expired. Please sign in again.</span>
             </div>
           )}
 
           {error && (
-            <div className="mb-5 p-3.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-start gap-2.5">
+            <div className="mb-6 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-start gap-2.5">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <div className="flex-1 font-medium">{error}</div>
             </div>
@@ -104,8 +140,8 @@ export function Login() {
           <form className="space-y-4" onSubmit={handleSubmit} noValidate>
             {/* Email Field */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                Staff Email
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Email
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -122,10 +158,10 @@ export function Login() {
                     }
                   }}
                   placeholder="admin@zinthlabs.com"
-                  className={`w-full pl-10 pr-3.5 py-2.5 text-sm bg-white border rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none transition-colors ${
+                  className={`w-full pl-10 pr-3.5 py-3 text-sm bg-white border rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none transition-colors ${
                     validationErrors.email
-                      ? "border-rose-400 focus:ring-2 focus:ring-rose-200"
-                      : "border-slate-300 focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+                      ? "border-rose-400 focus:ring-4 focus:ring-rose-100"
+                      : "border-slate-200 focus:ring-4 focus:ring-zinth-500/20 focus:border-zinth-500"
                   }`}
                 />
               </div>
@@ -138,7 +174,7 @@ export function Login() {
 
             {/* Password Field */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+              <label className="block text-sm font-medium text-slate-700 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -156,10 +192,10 @@ export function Login() {
                     }
                   }}
                   placeholder="••••••••••••"
-                  className={`w-full pl-10 pr-10 py-2.5 text-sm bg-white border rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none transition-colors ${
+                  className={`w-full pl-10 pr-10 py-3 text-sm bg-white border rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none transition-colors ${
                     validationErrors.password
-                      ? "border-rose-400 focus:ring-2 focus:ring-rose-200"
-                      : "border-slate-300 focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+                      ? "border-rose-400 focus:ring-4 focus:ring-rose-100"
+                      : "border-slate-200 focus:ring-4 focus:ring-zinth-500/20 focus:border-zinth-500"
                   }`}
                 />
                 <button
@@ -187,20 +223,18 @@ export function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-semibold text-white bg-zinth-500 hover:bg-zinth-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinth-500 shadow-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold text-white bg-zinth-500 hover:bg-zinth-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinth-500 shadow-glow transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-                {loading ? "Authenticating..." : "Sign In to Registry"}
+                {loading ? "Signing in..." : "Sign in"}
               </button>
             </div>
           </form>
 
-          {/* Security Notice */}
-          <div className="mt-6 pt-4 border-t border-slate-100 text-center">
-            <span className="text-[11px] text-slate-400">
-              Restricted system for authorized Zinth Labs operations personnel only.
-            </span>
-          </div>
+          <p className="mt-8 text-xs text-slate-400">
+            Restricted system for authorized Zinth Labs staff only.
+          </p>
+        </div>
         </div>
       </div>
     </div>

@@ -8,16 +8,16 @@ export function Settings() {
   return (
     <div className="space-y-6 max-w-4xl">
       <div>
-        <h2 className="text-xl font-bold tracking-tight text-slate-900">
+        <h2 className="text-2xl font-bold tracking-tight text-slate-900">
           System Settings & Platform Profile
         </h2>
-        <p className="text-xs text-slate-500 mt-0.5">
+        <p className="text-sm text-slate-500 mt-1">
           Configuration parameters and operational security controls for Zinth Labs Registry.
         </p>
       </div>
 
       {/* Admin Profile Card */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-card p-6">
         <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
           <div className="p-2.5 rounded-lg bg-orange-50 text-zinth-500 border border-orange-100">
             <User className="w-5 h-5" />
@@ -45,7 +45,7 @@ export function Settings() {
 
           <div>
             <span className="text-slate-400 block">Role</span>
-            <span className="inline-flex items-center gap-1 font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded text-[11px] mt-0.5">
+            <span className="inline-flex items-center gap-1 font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded text-xs mt-0.5">
               <CheckCircle2 className="w-3 h-3" />
               Master Operations Admin
             </span>
@@ -53,7 +53,7 @@ export function Settings() {
 
           <div>
             <span className="text-slate-400 block">Session Token</span>
-            <span className="font-mono text-[11px] text-slate-600 mt-0.5 block">
+            <span className="font-mono text-xs text-slate-600 mt-0.5 block">
               Encrypted Bearer JWT (LocalStorage)
             </span>
           </div>
@@ -61,7 +61,7 @@ export function Settings() {
       </div>
 
       {/* System Architecture Card */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-card p-6">
         <div className="flex items-center gap-3 pb-4 border-b border-slate-100">
           <div className="p-2.5 rounded-lg bg-blue-50 text-blue-600 border border-blue-100">
             <Server className="w-5 h-5" />

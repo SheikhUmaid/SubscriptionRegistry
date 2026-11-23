@@ -51,7 +51,7 @@ export function ApiKeyDisplayModal({ isOpen, onClose, apiKey, deploymentCode }) 
         <div>
           <label className="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center justify-between">
             <span>Generated Live API Key</span>
-            <span className="text-[11px] text-slate-400 font-normal">SHA-256 Hashed on Server</span>
+            <span className="text-xs text-slate-400 font-normal">SHA-256 Hashed on Server</span>
           </label>
           <div className="relative flex items-center">
             <input
@@ -86,7 +86,7 @@ export function ApiKeyDisplayModal({ isOpen, onClose, apiKey, deploymentCode }) 
 
         {/* Action Button */}
         <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-          <div className="flex items-center gap-1.5 text-[11px] text-slate-500">
+          <div className="flex items-center gap-1.5 text-xs text-slate-500">
             <KeyRound className="w-3.5 h-3.5 text-slate-400" />
             <span>Deployment can authenticate via Bearer token header.</span>
           </div>

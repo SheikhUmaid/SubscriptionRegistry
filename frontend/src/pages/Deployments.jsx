@@ -119,10 +119,10 @@ export function Deployments() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900">
             Deployments
           </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-sm text-slate-500 mt-1">
             Registry of active client infrastructure, server endpoints, and credentials.
           </p>
         </div>
@@ -132,7 +132,7 @@ export function Deployments() {
             type="button"
             onClick={fetchDeployments}
             disabled={loading}
-            className="p-2 text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-sm disabled:opacity-50"
+            className="p-2.5 text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-colors shadow-card disabled:opacity-50"
             title="Refresh List"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin text-zinth-500" : ""}`} />
@@ -140,7 +140,7 @@ export function Deployments() {
           <button
             type="button"
             onClick={() => setIsRegisterOpen(true)}
-            className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-white bg-zinth-500 hover:bg-zinth-600 rounded-lg shadow-sm transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-zinth-500 hover:bg-zinth-600 rounded-xl shadow-glow transition-colors"
           >
             <Plus className="w-4 h-4" />
             <span>Register Deployment</span>
@@ -165,7 +165,7 @@ export function Deployments() {
       )}
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+      <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-card flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <SearchInput
           value={searchTerm}
           onChange={handleSearchChange}
@@ -181,7 +181,7 @@ export function Deployments() {
           <select
             value={hostingFilter}
             onChange={(e) => handleHostingFilterChange(e.target.value)}
-            className="px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+            className="px-3 py-2 text-sm bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
           >
             <option value="all">All Hosting Types</option>
             <option value="shared-vps">Shared VPS</option>
@@ -192,7 +192,7 @@ export function Deployments() {
       </div>
 
       {/* Deployments Table */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-card overflow-hidden">
         {loading ? (
           <TableSkeleton rows={6} cols={8} />
         ) : filteredDeployments.length === 0 ? (
@@ -211,16 +211,16 @@ export function Deployments() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50/75 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-                  <th className="py-3 px-4">Deployment Code</th>
-                  <th className="py-3 px-4">Customer Name</th>
-                  <th className="py-3 px-4">Product</th>
-                  <th className="py-3 px-4">Frontend URL</th>
-                  <th className="py-3 px-4">Backend URL</th>
-                  <th className="py-3 px-4">Hosting Type</th>
-                  <th className="py-3 px-4">Hosting Reference</th>
-                  <th className="py-3 px-4">Status</th>
-                  <th className="py-3 px-4 text-right">Actions</th>
+                <tr className="border-b border-slate-200 bg-slate-50/80 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <th className="py-3.5 px-5">Deployment Code</th>
+                  <th className="py-3.5 px-5">Customer Name</th>
+                  <th className="py-3.5 px-5">Product</th>
+                  <th className="py-3.5 px-5">Frontend URL</th>
+                  <th className="py-3.5 px-5">Backend URL</th>
+                  <th className="py-3.5 px-5">Hosting Type</th>
+                  <th className="py-3.5 px-5">Hosting Reference</th>
+                  <th className="py-3.5 px-5">Status</th>
+                  <th className="py-3.5 px-5 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-xs">
@@ -229,27 +229,27 @@ export function Deployments() {
                     key={dep._id}
                     className="hover:bg-slate-50/80 transition-colors"
                   >
-                    <td className="py-3.5 px-4 font-mono font-medium text-slate-900">
+                    <td className="py-4 px-5 font-mono font-medium text-slate-900">
                       {dep.deploymentCode}
                     </td>
-                    <td className="py-3.5 px-4">
+                    <td className="py-4 px-5">
                       <span className="font-semibold text-slate-800 block">
                         {dep.customerId?.businessName || "Unknown Customer"}
                       </span>
-                      <span className="text-[11px] font-mono text-slate-400">
+                      <span className="text-xs font-mono text-slate-400">
                         {dep.customerId?.customerCode || ""}
                       </span>
                     </td>
-                    <td className="py-3.5 px-4 text-slate-600 font-medium">
+                    <td className="py-4 px-5 text-slate-600 font-medium">
                       {dep.product}
                     </td>
-                    <td className="py-3.5 px-4 max-w-[150px] truncate">
+                    <td className="py-4 px-5 max-w-[150px] truncate">
                       {dep.frontendUrl ? (
                         <a
                           href={dep.frontendUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-zinth-600 hover:text-zinth-700 inline-flex items-center gap-1 font-mono text-[11px]"
+                          className="text-zinth-600 hover:text-zinth-700 inline-flex items-center gap-1 font-mono text-xs"
                         >
                           <span className="truncate">{dep.frontendUrl.replace(/^https?:\/\//, "")}</span>
                           <ExternalLink className="w-3 h-3 shrink-0" />
@@ -258,27 +258,27 @@ export function Deployments() {
                         <span className="text-slate-400">—</span>
                       )}
                     </td>
-                    <td className="py-3.5 px-4 max-w-[150px] truncate">
+                    <td className="py-4 px-5 max-w-[150px] truncate">
                       <a
                         href={dep.backendUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-slate-600 hover:text-slate-800 inline-flex items-center gap-1 font-mono text-[11px]"
+                        className="text-slate-600 hover:text-slate-800 inline-flex items-center gap-1 font-mono text-xs"
                       >
                         <span className="truncate">{dep.backendUrl.replace(/^https?:\/\//, "")}</span>
                         <ExternalLink className="w-3 h-3 shrink-0" />
                       </a>
                     </td>
-                    <td className="py-3.5 px-4">
+                    <td className="py-4 px-5">
                       <Badge status={dep.hostingType} />
                     </td>
-                    <td className="py-3.5 px-4 text-slate-500 font-mono text-[11px]">
+                    <td className="py-4 px-5 text-slate-500 font-mono text-xs">
                       {dep.hostingReference || "—"}
                     </td>
-                    <td className="py-3.5 px-4">
+                    <td className="py-4 px-5">
                       <Badge status={dep.deploymentStatus || "active"} />
                     </td>
-                    <td className="py-3.5 px-4 text-right">
+                    <td className="py-4 px-5 text-right">
                       <div className="inline-flex items-center gap-1.5 justify-end">
                         <button
                           type="button"

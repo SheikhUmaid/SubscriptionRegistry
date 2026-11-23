@@ -133,10 +133,10 @@ export function Renewals() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900">
             Renewal History
           </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-sm text-slate-500 mt-1">
             Audit trail of subscription extensions, transaction references, and payment verification.
           </p>
         </div>
@@ -146,7 +146,7 @@ export function Renewals() {
             type="button"
             onClick={fetchRenewals}
             disabled={loading}
-            className="p-2 text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-sm disabled:opacity-50"
+            className="p-2.5 text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-colors shadow-card disabled:opacity-50"
             title="Refresh List"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin text-zinth-500" : ""}`} />
@@ -179,7 +179,7 @@ export function Renewals() {
       )}
 
       {/* Search and Filters Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+      <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-card flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
         <SearchInput
           value={searchTerm}
           onChange={handleSearchChange}
@@ -192,7 +192,7 @@ export function Renewals() {
           <select
             value={selectedCustomerId}
             onChange={(e) => handleCustomerFilter(e.target.value)}
-            className="px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+            className="px-3 py-2 text-sm bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
           >
             <option value="">All Customers</option>
             {customers.map((c) => (
@@ -206,7 +206,7 @@ export function Renewals() {
           <select
             value={selectedDeploymentId}
             onChange={(e) => handleDeploymentFilter(e.target.value)}
-            className="px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+            className="px-3 py-2 text-sm bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
           >
             <option value="">All Deployments</option>
             {deployments.map((d) => (
@@ -220,7 +220,7 @@ export function Renewals() {
           <select
             value={statusFilter}
             onChange={(e) => handleStatusChange(e.target.value)}
-            className="px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+            className="px-3 py-2 text-sm bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
           >
             <option value="all">All Payment Statuses</option>
             <option value="confirmed">Confirmed</option>
@@ -232,7 +232,7 @@ export function Renewals() {
       </div>
 
       {/* Renewals Table */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-card overflow-hidden">
         {loading ? (
           <TableSkeleton rows={6} cols={9} />
         ) : filteredRenewals.length === 0 ? (
@@ -245,17 +245,17 @@ export function Renewals() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50/75 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-                  <th className="py-3 px-4">Customer</th>
-                  <th className="py-3 px-4">Deployment</th>
-                  <th className="py-3 px-4">Type</th>
-                  <th className="py-3 px-4">Amount</th>
-                  <th className="py-3 px-4">Method</th>
-                  <th className="py-3 px-4">Reference</th>
-                  <th className="py-3 px-4">Status</th>
-                  <th className="py-3 px-4">Billing Period</th>
-                  <th className="py-3 px-4">Recorded</th>
-                  <th className="py-3 px-4 text-right">Actions</th>
+                <tr className="border-b border-slate-200 bg-slate-50/80 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <th className="py-3.5 px-5">Customer</th>
+                  <th className="py-3.5 px-5">Deployment</th>
+                  <th className="py-3.5 px-5">Type</th>
+                  <th className="py-3.5 px-5">Amount</th>
+                  <th className="py-3.5 px-5">Method</th>
+                  <th className="py-3.5 px-5">Reference</th>
+                  <th className="py-3.5 px-5">Status</th>
+                  <th className="py-3.5 px-5">Billing Period</th>
+                  <th className="py-3.5 px-5">Recorded</th>
+                  <th className="py-3.5 px-5 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-xs">
@@ -264,34 +264,34 @@ export function Renewals() {
                     key={ren._id}
                     className="hover:bg-slate-50/80 transition-colors"
                   >
-                    <td className="py-3.5 px-4 font-semibold text-slate-900">
+                    <td className="py-4 px-5 font-semibold text-slate-900">
                       {ren.customerId?.businessName || "Unknown Customer"}
                     </td>
-                    <td className="py-3.5 px-4 font-mono font-medium text-slate-700">
+                    <td className="py-4 px-5 font-mono font-medium text-slate-700">
                       {ren.deploymentId?.deploymentCode || "—"}
                     </td>
-                    <td className="py-3.5 px-4 capitalize text-slate-600">
+                    <td className="py-4 px-5 capitalize text-slate-600">
                       {ren.type}
                     </td>
-                    <td className="py-3.5 px-4 font-semibold text-slate-900">
+                    <td className="py-4 px-5 font-semibold text-slate-900">
                       {formatCurrency(ren.amount, ren.currency)}
                     </td>
-                    <td className="py-3.5 px-4 uppercase text-[11px] font-medium text-slate-600">
+                    <td className="py-4 px-5 uppercase text-xs font-medium text-slate-600">
                       {ren.paymentMethod}
                     </td>
-                    <td className="py-3.5 px-4 font-mono text-[11px] text-slate-600 max-w-[130px] truncate">
+                    <td className="py-4 px-5 font-mono text-xs text-slate-600 max-w-[130px] truncate">
                       {ren.paymentReference || "—"}
                     </td>
-                    <td className="py-3.5 px-4">
+                    <td className="py-4 px-5">
                       <Badge status={ren.paymentStatus} />
                     </td>
-                    <td className="py-3.5 px-4 text-slate-500 text-[11px]">
+                    <td className="py-4 px-5 text-slate-500 text-xs">
                       {formatDate(ren.periodStartsAt)} &rarr; {formatDate(ren.periodEndsAt)}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-500 text-[11px]">
+                    <td className="py-4 px-5 text-slate-500 text-xs">
                       {formatDate(ren.createdAt)}
                     </td>
-                    <td className="py-3.5 px-4 text-right">
+                    <td className="py-4 px-5 text-right">
                       <div className="inline-flex items-center gap-1.5 justify-end">
                         <button
                           type="button"

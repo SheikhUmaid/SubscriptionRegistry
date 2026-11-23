@@ -55,8 +55,8 @@ export function PlanRequests() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-slate-900">Plan Requests</h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900">Plan Requests</h2>
+          <p className="text-sm text-slate-500 mt-1">
             Venues that paid by UPI and asked to renew or switch plan. Check the UPI reference
             in your bank app, then approve.
           </p>
@@ -76,7 +76,7 @@ export function PlanRequests() {
             type="button"
             onClick={fetchData}
             disabled={loading}
-            className="p-2 text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 shadow-sm disabled:opacity-50"
+            className="p-2.5 text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-colors shadow-card disabled:opacity-50"
             title="Refresh"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin text-zinth-500" : ""}`} />
@@ -91,7 +91,7 @@ export function PlanRequests() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-card overflow-hidden">
         {loading ? (
           <TableSkeleton rows={4} cols={7} />
         ) : requests.length === 0 ? (
@@ -104,45 +104,45 @@ export function PlanRequests() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50/75 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-                  <th className="py-3 px-4">Venue</th>
-                  <th className="py-3 px-4">Plan change</th>
-                  <th className="py-3 px-4">Amount</th>
-                  <th className="py-3 px-4">UPI reference</th>
-                  <th className="py-3 px-4">Sent</th>
-                  <th className="py-3 px-4">Status</th>
-                  <th className="py-3 px-4 text-right">Actions</th>
+                <tr className="border-b border-slate-200 bg-slate-50/80 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <th className="py-3.5 px-5">Venue</th>
+                  <th className="py-3.5 px-5">Plan change</th>
+                  <th className="py-3.5 px-5">Amount</th>
+                  <th className="py-3.5 px-5">UPI reference</th>
+                  <th className="py-3.5 px-5">Sent</th>
+                  <th className="py-3.5 px-5">Status</th>
+                  <th className="py-3.5 px-5 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-xs">
                 {requests.map((r) => (
                   <tr key={r._id} className="hover:bg-slate-50/80 align-top">
-                    <td className="py-3.5 px-4">
+                    <td className="py-4 px-5">
                       <div className="font-semibold text-slate-900">{venueName(r)}</div>
                       <div className="font-mono text-slate-500">{r.deploymentId?.deploymentCode}</div>
                       {r.note && <div className="mt-1 text-slate-500 italic">"{r.note}"</div>}
                     </td>
-                    <td className="py-3.5 px-4 capitalize">
+                    <td className="py-4 px-5 capitalize">
                       <span className="inline-flex items-center gap-1.5 font-medium text-slate-700">
                         {r.currentPlanCode || "none"}
                         <ArrowRight className="w-3 h-3 text-slate-400" />
                         <span className="font-bold text-slate-900">{r.requestedPlanCode}</span>
                       </span>
                     </td>
-                    <td className="py-3.5 px-4 font-semibold text-slate-800">
+                    <td className="py-4 px-5 font-semibold text-slate-800">
                       {formatCurrency(r.amount, r.currency)}
                     </td>
-                    <td className="py-3.5 px-4 font-mono text-slate-700">
+                    <td className="py-4 px-5 font-mono text-slate-700">
                       {r.paymentReference || <span className="font-sans text-slate-400">not given</span>}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-500">{formatDateTime(r.createdAt)}</td>
-                    <td className="py-3.5 px-4">
+                    <td className="py-4 px-5 text-slate-500">{formatDateTime(r.createdAt)}</td>
+                    <td className="py-4 px-5">
                       <Badge status={r.status} />
                       {r.resolutionNote && (
                         <div className="mt-1 text-slate-500">{r.resolutionNote}</div>
                       )}
                     </td>
-                    <td className="py-3.5 px-4 text-right">
+                    <td className="py-4 px-5 text-right">
                       {r.status === "pending" && (
                         <div className="inline-flex items-center gap-1.5">
                           <button
@@ -201,7 +201,7 @@ export function PlanRequests() {
               value={rejectNote}
               onChange={(e) => setRejectNote(e.target.value)}
               placeholder="e.g. Payment not received — please check the UPI reference"
-              className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+              className="w-full px-3.5 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
             />
           </span>
         }

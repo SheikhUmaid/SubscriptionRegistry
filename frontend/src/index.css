@@ -3,15 +3,47 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     @apply bg-slate-50 text-slate-900 font-sans;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    @apply bg-zinth-500/20 text-slate-900;
+  }
+
+  /* Numbers line up in tables and stat cards */
+  table,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Table headers: calmer, readable labels */
+  thead th {
+    @apply whitespace-nowrap;
+  }
+
+  /* Consistent, visible keyboard focus */
+  button:focus-visible,
+  a:focus-visible,
+  select:focus-visible {
+    @apply outline-none ring-2 ring-zinth-500/40 ring-offset-2 ring-offset-white;
+  }
+
+  select {
+    @apply cursor-pointer;
   }
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -21,9 +53,11 @@
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+  background-clip: padding-box;
 }
-

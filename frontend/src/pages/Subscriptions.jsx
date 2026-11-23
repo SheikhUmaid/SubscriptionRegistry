@@ -161,10 +161,10 @@ export function Subscriptions() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900">
             Subscriptions
           </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-sm text-slate-500 mt-1">
             Monitor client validity, billing cycles, renewals, and active states.
           </p>
         </div>
@@ -174,7 +174,7 @@ export function Subscriptions() {
             type="button"
             onClick={fetchData}
             disabled={loading}
-            className="p-2 text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-sm disabled:opacity-50"
+            className="p-2.5 text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-colors shadow-card disabled:opacity-50"
             title="Refresh List"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin text-zinth-500" : ""}`} />
@@ -182,7 +182,7 @@ export function Subscriptions() {
           <button
             type="button"
             onClick={() => setIsCreateOpen(true)}
-            className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-white bg-zinth-500 hover:bg-zinth-600 rounded-lg shadow-sm transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-zinth-500 hover:bg-zinth-600 rounded-xl shadow-glow transition-colors"
           >
             <Plus className="w-4 h-4" />
             <span>Create Subscription</span>
@@ -207,7 +207,7 @@ export function Subscriptions() {
       )}
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+      <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-card flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <SearchInput
           value={searchTerm}
           onChange={handleSearchChange}
@@ -223,7 +223,7 @@ export function Subscriptions() {
           <select
             value={statusFilter}
             onChange={(e) => handleStatusFilterChange(e.target.value)}
-            className="px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+            className="px-3 py-2 text-sm bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
           >
             <option value="all">All Subscriptions</option>
             <option value="active">Active</option>
@@ -234,7 +234,7 @@ export function Subscriptions() {
       </div>
 
       {/* Subscriptions Table */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-card overflow-hidden">
         {loading ? (
           <TableSkeleton rows={6} cols={9} />
         ) : filteredSubscriptions.length === 0 ? (
@@ -253,16 +253,16 @@ export function Subscriptions() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50/75 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-                  <th className="py-3 px-4">Customer Name</th>
-                  <th className="py-3 px-4">Deployment Code</th>
-                  <th className="py-3 px-4">Plan</th>
-                  <th className="py-3 px-4">Price</th>
-                  <th className="py-3 px-4">Start Date</th>
-                  <th className="py-3 px-4">Expiry Date</th>
-                  <th className="py-3 px-4">Days Left</th>
-                  <th className="py-3 px-4">Status</th>
-                  <th className="py-3 px-4 text-right">Actions</th>
+                <tr className="border-b border-slate-200 bg-slate-50/80 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <th className="py-3.5 px-5">Customer Name</th>
+                  <th className="py-3.5 px-5">Deployment Code</th>
+                  <th className="py-3.5 px-5">Plan</th>
+                  <th className="py-3.5 px-5">Price</th>
+                  <th className="py-3.5 px-5">Start Date</th>
+                  <th className="py-3.5 px-5">Expiry Date</th>
+                  <th className="py-3.5 px-5">Days Left</th>
+                  <th className="py-3.5 px-5">Status</th>
+                  <th className="py-3.5 px-5 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-xs">
@@ -281,46 +281,46 @@ export function Subscriptions() {
                         isExpiringSoon ? "bg-orange-50/30" : ""
                       }`}
                     >
-                      <td className="py-3.5 px-4 font-semibold text-slate-900">
+                      <td className="py-4 px-5 font-semibold text-slate-900">
                         {getCustomerName(sub)}
                       </td>
-                      <td className="py-3.5 px-4 font-mono font-medium text-slate-700">
+                      <td className="py-4 px-5 font-mono font-medium text-slate-700">
                         {sub.deploymentId?.deploymentCode || "—"}
                       </td>
-                      <td className="py-3.5 px-4 capitalize text-slate-600 font-medium">
+                      <td className="py-4 px-5 capitalize text-slate-600 font-medium">
                         {sub.planCode}
                       </td>
-                      <td className="py-3.5 px-4 font-semibold text-slate-800">
+                      <td className="py-4 px-5 font-semibold text-slate-800">
                         {formatCurrency(sub.price, sub.currency)}
                       </td>
-                      <td className="py-3.5 px-4 text-slate-500">
+                      <td className="py-4 px-5 text-slate-500">
                         {formatDate(sub.startsAt)}
                       </td>
-                      <td className="py-3.5 px-4 font-medium text-slate-700">
+                      <td className="py-4 px-5 font-medium text-slate-700">
                         {formatDate(sub.expiresAt)}
                       </td>
-                      <td className="py-3.5 px-4">
+                      <td className="py-4 px-5">
                         {isExpiringSoon ? (
-                          <span className="inline-flex items-center gap-1 font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded-full text-[11px]">
+                          <span className="inline-flex items-center gap-1 font-bold text-orange-600 bg-orange-100 px-2 py-0.5 rounded-full text-xs">
                             <AlertTriangle className="w-3 h-3" />
                             {daysRemaining} {daysRemaining === 1 ? "day" : "days"}
                           </span>
                         ) : daysRemaining !== null && daysRemaining < 0 ? (
-                          <span className="text-rose-600 font-semibold text-[11px]">
+                          <span className="text-rose-600 font-semibold text-xs">
                             Expired
                           </span>
                         ) : daysRemaining !== null ? (
-                          <span className="text-slate-600 text-[11px] font-medium">
+                          <span className="text-slate-600 text-xs font-medium">
                             {daysRemaining} days
                           </span>
                         ) : (
                           "—"
                         )}
                       </td>
-                      <td className="py-3.5 px-4">
+                      <td className="py-4 px-5">
                         <Badge status={sub.status} />
                       </td>
-                      <td className="py-3.5 px-4 text-right">
+                      <td className="py-4 px-5 text-right">
                         <div className="inline-flex items-center gap-1.5 justify-end">
                           <button
                             type="button"

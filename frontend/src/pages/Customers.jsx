@@ -104,10 +104,10 @@ export function Customers() {
       {/* Top action header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold tracking-tight text-slate-900">
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900">
             Customers
           </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <p className="text-sm text-slate-500 mt-1">
             Manage client accounts, business contacts, and registration profiles.
           </p>
         </div>
@@ -117,7 +117,7 @@ export function Customers() {
             type="button"
             onClick={fetchCustomers}
             disabled={loading}
-            className="p-2 text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors shadow-sm disabled:opacity-50"
+            className="p-2.5 text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:border-slate-300 transition-colors shadow-card disabled:opacity-50"
             title="Refresh List"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin text-zinth-500" : ""}`} />
@@ -125,7 +125,7 @@ export function Customers() {
           <button
             type="button"
             onClick={() => setIsCreateOpen(true)}
-            className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-white bg-zinth-500 hover:bg-zinth-600 rounded-lg shadow-sm transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-zinth-500 hover:bg-zinth-600 rounded-xl shadow-glow transition-colors"
           >
             <Plus className="w-4 h-4" />
             <span>Create Customer</span>
@@ -150,7 +150,7 @@ export function Customers() {
       )}
 
       {/* Search and Filters bar */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+      <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-card flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <SearchInput
           value={searchTerm}
           onChange={handleSearchChange}
@@ -166,7 +166,7 @@ export function Customers() {
           <select
             value={statusFilter}
             onChange={(e) => handleStatusFilterChange(e.target.value)}
-            className="px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+            className="px-3 py-2 text-sm bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
           >
             <option value="all">All Statuses</option>
             <option value="active">Active</option>
@@ -176,7 +176,7 @@ export function Customers() {
       </div>
 
       {/* Data Table */}
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-card overflow-hidden">
         {loading ? (
           <TableSkeleton rows={6} cols={7} />
         ) : filteredCustomers.length === 0 ? (
@@ -195,15 +195,15 @@ export function Customers() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-slate-200 bg-slate-50/75 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-                  <th className="py-3 px-4">Customer Code</th>
-                  <th className="py-3 px-4">Business Name</th>
-                  <th className="py-3 px-4">Contact Person</th>
-                  <th className="py-3 px-4">Email</th>
-                  <th className="py-3 px-4">Phone</th>
-                  <th className="py-3 px-4">Account Status</th>
-                  <th className="py-3 px-4">Registered Date</th>
-                  <th className="py-3 px-4 text-right">Actions</th>
+                <tr className="border-b border-slate-200 bg-slate-50/80 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  <th className="py-3.5 px-5">Customer Code</th>
+                  <th className="py-3.5 px-5">Business Name</th>
+                  <th className="py-3.5 px-5">Contact Person</th>
+                  <th className="py-3.5 px-5">Email</th>
+                  <th className="py-3.5 px-5">Phone</th>
+                  <th className="py-3.5 px-5">Account Status</th>
+                  <th className="py-3.5 px-5">Registered Date</th>
+                  <th className="py-3.5 px-5 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-xs">
@@ -212,28 +212,28 @@ export function Customers() {
                     key={cust._id}
                     className="hover:bg-slate-50/80 transition-colors"
                   >
-                    <td className="py-3.5 px-4 font-mono font-medium text-slate-900">
+                    <td className="py-4 px-5 font-mono font-medium text-slate-900">
                       {cust.customerCode}
                     </td>
-                    <td className="py-3.5 px-4 font-semibold text-slate-800">
+                    <td className="py-4 px-5 font-semibold text-slate-800">
                       {cust.businessName}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-600">
+                    <td className="py-4 px-5 text-slate-600">
                       {cust.contactName}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-500">
+                    <td className="py-4 px-5 text-slate-500">
                       {cust.email || "—"}
                     </td>
-                    <td className="py-3.5 px-4 text-slate-600">
+                    <td className="py-4 px-5 text-slate-600">
                       {cust.phone}
                     </td>
-                    <td className="py-3.5 px-4">
+                    <td className="py-4 px-5">
                       <Badge status={cust.accountStatus || "active"} />
                     </td>
-                    <td className="py-3.5 px-4 text-slate-500">
+                    <td className="py-4 px-5 text-slate-500">
                       {formatDate(cust.createdAt)}
                     </td>
-                    <td className="py-3.5 px-4 text-right">
+                    <td className="py-4 px-5 text-right">
                       <div className="inline-flex items-center gap-1.5 justify-end">
                         <button
                           type="button"

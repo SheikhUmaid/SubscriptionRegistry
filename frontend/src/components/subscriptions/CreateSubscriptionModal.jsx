@@ -195,7 +195,7 @@ export function CreateSubscriptionModal({ isOpen, onClose, onSuccess }) {
                   <span className="block text-xs font-medium text-slate-700">
                     {formatCurrency(plan.price, plan.currency)}/{plan.interval}
                   </span>
-                  <span className="block text-[11px] text-slate-500 mt-0.5">
+                  <span className="block text-xs text-slate-500 mt-0.5">
                     {plan.label}
                   </span>
                 </button>
@@ -220,7 +220,7 @@ export function CreateSubscriptionModal({ isOpen, onClose, onSuccess }) {
           <select
             value={formData.currency}
             onChange={(e) => setFormData({ ...formData, currency: e.target.value })}
-            className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+            className="w-full px-3.5 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
           >
             <option value="INR">INR (₹)</option>
             <option value="USD">USD ($)</option>
@@ -311,14 +311,14 @@ export function CreateSubscriptionModal({ isOpen, onClose, onSuccess }) {
             type="button"
             onClick={onClose}
             disabled={loading}
-            className="px-4 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
+            className="px-4 py-2.5 text-sm font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-zinth-500 hover:bg-zinth-600 rounded-lg shadow-sm transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-zinth-500 hover:bg-zinth-600 rounded-xl shadow-glow transition-colors disabled:opacity-50"
           >
             {loading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
             {loading ? "Creating..." : "Create Subscription"}

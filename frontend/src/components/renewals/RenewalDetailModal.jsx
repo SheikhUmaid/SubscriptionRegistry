@@ -19,7 +19,7 @@ export function RenewalDetailModal({ isOpen, onClose, renewal, onDelete }) {
         {/* Status and Amount Banner */}
         <div className="flex items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-xl">
           <div>
-            <span className="text-[11px] text-slate-500 uppercase tracking-wider block">
+            <span className="text-xs text-slate-500 uppercase tracking-wider block">
               Payment Status
             </span>
             <div className="mt-1">
@@ -27,7 +27,7 @@ export function RenewalDetailModal({ isOpen, onClose, renewal, onDelete }) {
             </div>
           </div>
           <div className="text-right">
-            <span className="text-[11px] text-slate-500 uppercase tracking-wider block">
+            <span className="text-xs text-slate-500 uppercase tracking-wider block">
               Total Recorded Amount
             </span>
             <span className="text-lg font-bold text-slate-900 mt-0.5 block">
@@ -134,7 +134,7 @@ export function RenewalDetailModal({ isOpen, onClose, renewal, onDelete }) {
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
+            className="px-4 py-2.5 text-sm font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
           >
             Close
           </button>

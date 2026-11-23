@@ -39,7 +39,7 @@ export function PlanEntitlements({ plan }) {
             className="p-2 rounded-lg bg-slate-50 border border-slate-200 text-center"
           >
             <span className="block text-base font-bold text-slate-900">{value}</span>
-            <span className="block text-[11px] text-slate-500">{humanize(key)}</span>
+            <span className="block text-xs text-slate-500">{humanize(key)}</span>
           </div>
         ))}
       </div>

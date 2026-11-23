@@ -94,12 +94,12 @@ export function ExtendSubscriptionModal({ isOpen, onClose, subscription, onSucce
 
       {/* Date progression display */}
       <div className="mb-5 p-4 bg-slate-50 border border-slate-200 rounded-xl">
-        <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block mb-2">
+        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-2">
           Validity Extension (30 Days)
         </span>
         <div className="flex items-center justify-between gap-2 text-xs">
           <div className="space-y-0.5">
-            <span className="text-[11px] text-slate-400 block">Current Expiry</span>
+            <span className="text-xs text-slate-400 block">Current Expiry</span>
             <span className="font-semibold text-slate-800">
               {formatDate(subscription.expiresAt)}
             </span>
@@ -110,7 +110,7 @@ export function ExtendSubscriptionModal({ isOpen, onClose, subscription, onSucce
           </div>
 
           <div className="space-y-0.5 text-right">
-            <span className="text-[11px] text-emerald-600 font-medium block">Proposed Expiry</span>
+            <span className="text-xs text-emerald-600 font-medium block">Proposed Expiry</span>
             <span className="font-bold text-emerald-700">
               {formatDate(proposedExpiry)}
             </span>
@@ -151,7 +151,7 @@ export function ExtendSubscriptionModal({ isOpen, onClose, subscription, onSucce
             <select
               value={formData.paymentMethod}
               onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
-              className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+              className="w-full px-3.5 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
             >
               <option value="upi">UPI (GPay, PhonePe, Paytm)</option>
               <option value="bank-transfer">Bank IMPS / NEFT</option>
@@ -194,7 +194,7 @@ export function ExtendSubscriptionModal({ isOpen, onClose, subscription, onSucce
             placeholder="Verified bank statement or invoice reference..."
             value={formData.notes}
             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-            className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
+            className="w-full px-3.5 py-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-zinth-500/20 focus:border-zinth-500"
           />
         </div>
 
@@ -203,14 +203,14 @@ export function ExtendSubscriptionModal({ isOpen, onClose, subscription, onSucce
             type="button"
             onClick={onClose}
             disabled={loading}
-            className="px-4 py-2 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors"
+            className="px-4 py-2.5 text-sm font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-zinth-500 hover:bg-zinth-600 rounded-lg shadow-sm transition-colors disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-white bg-zinth-500 hover:bg-zinth-600 rounded-xl shadow-glow transition-colors disabled:opacity-50"
           >
             {loading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
             {loading ? "Extending..." : "Confirm Extension"}
