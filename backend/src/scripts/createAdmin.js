@@ -1,5 +1,11 @@
 import dotenv from "dotenv";
+import dns from "dns";
 dotenv.config();
+
+// Local-only workaround for querySrv ECONNREFUSED on mongodb+srv URIs.
+if (process.env.NODE_ENV !== "production") {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+}
 
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";

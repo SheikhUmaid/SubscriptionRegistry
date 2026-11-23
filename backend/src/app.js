@@ -1,7 +1,11 @@
 
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 
 
@@ -23,6 +27,21 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+
+// Ensure MongoDB is connected before any route runs (required on Vercel,
+// where server.js never executes). Reuses the cached connection when warm.
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (error) {
+        console.error("Database connection failed:", error);
+        res.status(500).json({
+            success: false,
+            message: error.message || "Database connection failed."
+        });
+    }
+});
 
 // Health check
 app.get("/health", (req, res) => {
