@@ -5,6 +5,7 @@ import { Menu, LogOut, ChevronDown, ShieldCheck } from "lucide-react";
 
 const pageTitles = {
   "/": "Dashboard",
+  "/demo-requests": "Demo Requests",
   "/customers": "Customers",
   "/deployments": "Deployments",
   "/subscriptions": "Subscriptions",

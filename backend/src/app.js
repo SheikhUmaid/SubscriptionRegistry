@@ -16,6 +16,7 @@ import subscriptionRoutes from "./routes/subscriptionRoutes.js";
 import renewalRoutes from "./routes/renewalRoutes.js";
 import registryRoutes from "./routes/registryRoutes.js";
 import planRequestRoutes from "./routes/planRequestRoutes.js";
+import leadRoutes from "./routes/leadRoutes.js";
 
 // Middleware
 import { errorMiddleware } from "./middleware/errorMiddleware.js";
@@ -58,6 +59,7 @@ app.use("/api/subscriptions", subscriptionRoutes);
 app.use("/api/renewals", renewalRoutes);
 app.use("/api/registry", registryRoutes);
 app.use("/api/plan-requests", planRequestRoutes);
+app.use("/api/leads", leadRoutes);
 
 app.use("/api/auth", authRoutes);
 // 404 handler

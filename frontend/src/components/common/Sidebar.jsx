@@ -9,12 +9,17 @@ import {
   Settings,
   X,
   Inbox,
+  UserRoundSearch,
 } from "lucide-react";
 
 const navigationGroups = [
   {
     label: "Overview",
     items: [{ name: "Dashboard", href: "/", icon: LayoutDashboard }],
+  },
+  {
+    label: "Sales",
+    items: [{ name: "Demo Requests", href: "/demo-requests", icon: UserRoundSearch }],
   },
   {
     label: "Registry",
